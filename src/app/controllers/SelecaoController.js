@@ -50,6 +50,39 @@ class SelecaoController {
         }
     }
 
+    // ================================
+    // NOVAS FUNCIONALIDADES
+    // ================================
+
+    async buscarPorGrupo(req, res) {
+        try {
+            const grupo = req.params.grupo
+            const resultado = await SelecaoRepository.buscarPorGrupo(grupo)
+            res.status(200).json(resultado)
+        } catch (erro) {
+            res.status(500).json({ erro: "Erro ao buscar seleções por grupo" })
+        }
+    }
+
+    async buscarPorNome(req, res) {
+        try {
+            const nome = req.params.nome
+            const resultado = await SelecaoRepository.buscarPorNome(nome)
+            res.status(200).json(resultado)
+        } catch (erro) {
+            res.status(500).json({ erro: "Erro ao buscar seleção por nome" })
+        }
+    }
+
+    async estatisticas(req, res) {
+        try {
+            const resultado = await SelecaoRepository.estatisticas()
+            res.status(200).json(resultado)
+        } catch (erro) {
+            res.status(500).json({ erro: "Erro ao gerar estatísticas" })
+        }
+    }
+
 }
 
 export default new SelecaoController()

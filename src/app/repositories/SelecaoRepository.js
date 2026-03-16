@@ -37,6 +37,29 @@ class SelecaoRepository {
         return await this.executarQuery(sql, [id])
     }
 
+    // ================================
+    // NOVOS MÉTODOS
+    // ================================
+
+    async buscarPorGrupo(grupo) {
+        const sql = "SELECT * FROM dbselecao.dbcopa WHERE grupo = ?"
+        return await this.executarQuery(sql, [grupo])
+    }
+
+    async buscarPorNome(nome) {
+        const sql = "SELECT * FROM dbselecao.dbcopa WHERE selecao LIKE ?"
+        return await this.executarQuery(sql, [`%${nome}%`])
+    }
+
+    async estatisticas() {
+        const sql = `
+            SELECT grupo, COUNT(*) AS total
+            FROM dbselecao.dbcopa
+            GROUP BY grupo
+        `
+        return await this.executarQuery(sql)
+    }
+
 }
 
 export default new SelecaoRepository()
